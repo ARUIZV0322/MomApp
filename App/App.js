@@ -1,4 +1,5 @@
 import { StatusBar } from "expo-status-bar";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,10 +8,12 @@ import {
   Button,
   Image,
   SafeAreaView,
+  TouchableOpacity,
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import "react-native-gesture-handler";
+import { Audio } from "expo-av";
 
 const Stack = createStackNavigator();
 
@@ -38,7 +41,7 @@ const StartScreen = ({ navigation }) => {
   );
 };
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   const handlePhysicalTherapyStartButton = () => {
     console.log("Navigate to PT Home");
   };
@@ -50,7 +53,9 @@ const HomeScreen = () => {
   };
   const handlePersonalInfoStartButton = () => {
     console.log("Navigate to Personal Info Home");
+    navigation.navigate("PersonalInfoHome");
   };
+  const desiredAudioData = audioData.find((data) => data.id === 1);
   // Add content for the new screen here
   return (
     <View style={homeStyles.vbox}>
@@ -97,10 +102,15 @@ const HomeScreen = () => {
         </View>
       </View>
       <View style={homeStyles.hbox}>
-        <Image
-          source={require("./assets/Personal_Info_Icon.png")}
-          style={homeStyles.photo}
-        />
+        {desiredAudioData && (
+          <AudioPlayer
+            key={desiredAudioData.id}
+            audioUri={desiredAudioData.audio}
+            imageSource={desiredAudioData.image}
+          >
+            {" "}
+          </AudioPlayer>
+        )}
         <View style={homeStyles.buttonContainer}>
           <TouchableHighlight
             style={homeStyles.button}
@@ -114,12 +124,22 @@ const HomeScreen = () => {
   );
 };
 
+const PersonalInfoScreen = () => {
+  // Add content for the new screen here
+  return (
+    <View style={homeStyles.vbox}>
+      <Text>Hello</Text>
+    </View>
+  );
+};
+
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Start">
         <Stack.Screen name="Start" component={StartScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="PersonalInfoHome" component={PersonalInfoScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -131,7 +151,6 @@ const styles = StyleSheet.create({
     backgroundColor: "skyblue",
     alignItems: "center",
     justifyContent: "flex-start",
-    paddingTop: 20,
   },
   text: {
     marginTop: 40,
@@ -206,3 +225,48 @@ const homeStyles = StyleSheet.create({
     textAlign: "center",
   },
 });
+
+const AudioPlayer = ({ audioUri, imageSource }) => {
+  const [sound, setSound] = useState();
+
+  const playSound = async () => {
+    console.log("Audio URI: ", audioUri);
+    try {
+      const { sound } = await Audio.Sound.createAsync(
+        { uri: audioUri },
+        { shouldPlay: true }
+      );
+      setSound(sound);
+    } catch (error) {
+      console.error("Error loading audio", error);
+    }
+  };
+
+  useEffect(() => {
+    return async () => {
+      // Clean up the audio instance when the component unmounts
+      if (sound) {
+        try {
+          await sound.unloadAsync();
+        } catch (error) {
+          console.error("Error unloading audio:", error);
+        }
+      }
+    };
+  }, [sound]);
+
+  return (
+    <TouchableOpacity onPress={playSound}>
+      <Image source={imageSource} style={{ width: 150, height: 150 }} />
+    </TouchableOpacity>
+  );
+};
+
+const audioData = [
+  {
+    id: 1,
+    image: require("./assets/Personal_Info_Icon.png"),
+    audio: "./assets/audio.mp3",
+  },
+  // Add more objects for additional images and sounds
+];
