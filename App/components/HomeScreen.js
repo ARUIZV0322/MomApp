@@ -15,7 +15,7 @@ const HomeScreen = ({ navigation }) => {
       id: 1,
       image: require("/Users/adria/OneDrive/Desktop/React Native App/MomApp/App/assets/Personal_Info_Icon.png"),
       audio:
-        "/Users/adria/OneDrive/Desktop/React Native App/MomApp/App/assets/audio.mp3",
+        "/Users/adria/OneDrive/Desktop/React Native App/MomApp/App/assets/confirmation.mp3",
     },
   ];
   const handlePhysicalTherapyStartButton = () => {
@@ -82,15 +82,17 @@ const HomeScreen = ({ navigation }) => {
         </View>
       </View>
       <View style={homeStyles.hbox}>
-        {desiredAudioData && (
+        {/* {desiredAudioData && (
           <AudioPlayer
             key={desiredAudioData.id}
             audioUri={desiredAudioData.audio}
             imageSource={desiredAudioData.image}
-          >
-            {" "}
-          </AudioPlayer>
-        )}
+          />
+        )} */}
+        <Image
+          source={require("/Users/adria/OneDrive/Desktop/React Native App/MomApp/App/assets/Personal_Info_Icon.png")}
+          style={homeStyles.photo}
+        />
         <View style={homeStyles.buttonContainer}>
           <TouchableHighlight
             style={homeStyles.button}
@@ -149,6 +151,7 @@ const AudioPlayer = ({ audioUri, imageSource }) => {
   const [sound, setSound] = useState();
 
   const playSound = async () => {
+    requestAudioPermission();
     console.log("Audio URI: ", audioUri);
     try {
       const { sound } = await Audio.Sound.createAsync(
@@ -173,6 +176,16 @@ const AudioPlayer = ({ audioUri, imageSource }) => {
       }
     };
   }, [sound]);
+
+  const requestAudioPermission = async () => {
+    const { status } = await Audio.requestPermissionsAsync();
+    if (status !== "granted") {
+      console.log("Audio permissions not granted!");
+      // Handle the case where permissions are not granted
+    } else {
+      console.log("Audio permissions granted!");
+    }
+  };
 
   return (
     <TouchableOpacity onPress={playSound}>
