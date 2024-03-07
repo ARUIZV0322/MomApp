@@ -4,7 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import "react-native-gesture-handler";
 import StartScreen from "./components/StartScreen";
 import HomeScreen from "./components/HomeScreen";
-import PersonalInfoScreen from "./components/PersonalInfoScreen.js";
+import PersonalInfoEditScreen from "./components/PersonalInfoEditScreen.js";
 
 const Stack = createStackNavigator();
 
@@ -14,7 +14,10 @@ export default function App() {
       <Stack.Navigator initialRouteName="Start">
         <Stack.Screen name="Start" component={StartScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="PersonalInfoHome" component={PersonalInfoScreen} />
+        <Stack.Screen
+          name="Informacion Personal"
+          component={PersonalInfoEditScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
