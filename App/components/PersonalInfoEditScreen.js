@@ -56,11 +56,14 @@ const PersonalInfoEditScreen = ({ navigation }) => {
         emergencycontactnumber2
       );
       console.log("Personal information saved successfully!");
+      const loadedData = await dataToPass();
+      console.log("Navigate to Personal Info View");
+      navigation.navigate("Informacion Personal (Vista)", {
+        loadedData: loadedData,
+      });
     } catch (error) {
       console.error("Error saving personal information:", error);
     }
-    console.log("Navigate to Personal Info View");
-    navigation.navigate("Informacion Personal (Vista)");
   };
 
   const loadPersonalInfo = async () => {
@@ -346,5 +349,56 @@ const styles = StyleSheet.create({
     margin: 2,
   },
 });
+
+// Create a constant PersonalInfo with string properties
+const dataToPass = async () => {
+  try {
+    const storedName = await AsyncStorage.getItem("name");
+    const storedPhoneNumber = await AsyncStorage.getItem("phonenumber");
+    const storedBirthMonth = await AsyncStorage.getItem("birthmonth");
+    const storedBirthDay = await AsyncStorage.getItem("birthday");
+    const storedBirthYear = await AsyncStorage.getItem("birthyear");
+    const storedHomeAddress = await AsyncStorage.getItem("homeaddress");
+    const storedHomeCity = await AsyncStorage.getItem("homecity");
+    const storedHomeState = await AsyncStorage.getItem("homestate");
+    const storedHomeZip = await AsyncStorage.getItem("homezip");
+    const storedNameEmergencyContactName1 = await AsyncStorage.getItem(
+      "emergencycontactname1"
+    );
+    const storedNameEmergencyContactNumber1 = await AsyncStorage.getItem(
+      "emergencycontactnumber1"
+    );
+    const storedNameEmergencyContactName2 = await AsyncStorage.getItem(
+      "emergencycontactname2"
+    );
+    const storedNameEmergencyContactNumber2 = await AsyncStorage.getItem(
+      "emergencycontactnumber2"
+    );
+    // Do something with the retrieved data, or return it
+    const data = {
+      storedName: storedName || "",
+      storedPhoneNumber: storedPhoneNumber || "",
+      storedBirthMonth: storedBirthMonth || "",
+      storedBirthDay: storedBirthDay || "",
+      storedBirthYear: storedBirthYear || "",
+      storedHomeAddress: storedHomeAddress || "",
+      storedHomeCity: storedHomeCity || "",
+      storedHomeState: storedHomeState || "",
+      storedHomeZip: storedHomeZip || "",
+      storedNameEmergencyContactName1: storedNameEmergencyContactName1 || "",
+      storedNameEmergencyContactName2: storedNameEmergencyContactName2 || "",
+      storedNameEmergencyContactNumber1:
+        storedNameEmergencyContactNumber1 || "",
+      storedNameEmergencyContactNumber2:
+        storedNameEmergencyContactNumber2 || "",
+    };
+
+    console.log("Loaded personal information for transport:", data);
+
+    return data;
+  } catch (error) {
+    console.error("Error loading personal information for transport:", error);
+  }
+};
 
 export default PersonalInfoEditScreen;

@@ -110,7 +110,25 @@ import {
         </View>
       </View> */
 }
-const PersonalInfoViewScreen = ({ navigation }) => {
+const PersonalInfoViewScreen = ({ navigation, route }) => {
+  const {
+    storedName,
+    storedPhoneNumber,
+    storedBirthMonth,
+    storedBirthDay,
+    storedBirthYear,
+    storedHomeAddress,
+    storedHomeCity,
+    storedHomeState,
+    storedHomeZip,
+    storedNameEmergencyContactName1,
+    storedNameEmergencyContactName2,
+    storedNameEmergencyContactNumber1,
+    storedNameEmergencyContactNumber2,
+  } = route.params.loadedData;
+  console.log("Information from last save : ");
+  console.log(route.params.loadedData);
+
   const moveToPersonalInfoEditScreen = () => {
     console.log("Navigate to Personal Info Edit");
     navigation.navigate("Informacion Personal (Editar)");
@@ -119,6 +137,7 @@ const PersonalInfoViewScreen = ({ navigation }) => {
   // Add content for the new screen here
   return (
     <View style={styles.vbox}>
+      <Text>{storedName}</Text>
       <TouchableHighlight
         onPress={moveToPersonalInfoEditScreen}
         style={styles.button}
