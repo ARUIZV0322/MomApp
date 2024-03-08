@@ -6,124 +6,9 @@ import {
   TextInput,
   TouchableHighlight,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const PersonalInfoEditScreen = ({ navigation }) => {
-  const [name, setName] = useState("");
-  const [phonenumber, setPhoneNumber] = useState("");
-  const [birthMonth, setBirthMonth] = useState("");
-  const [birthDay, setBirthDay] = useState("");
-  const [birthYear, setBirthYear] = useState("");
-  const [homeadress, setHomeAddress] = useState("");
-  const [homecity, setHomeCity] = useState("");
-  const [homestate, setHomeState] = useState("");
-  const [homezip, setHomeZip] = useState("");
-  const [emergencycontactname1, setEmergencyContactName1] = useState("");
-  const [emergencycontactnumber1, setEmergencyContactNumber1] = useState("");
-  const [emergencycontactname2, setEmergencyContactName2] = useState("");
-  const [emergencycontactnumber2, setEmergencyContactNumber2] = useState("");
-
-  useEffect(() => {
-    // Load stored data when the component mounts
-    loadPersonalInfo();
-  }, []);
-
-  const savePersonalInfo = async () => {
-    try {
-      await AsyncStorage.setItem("name", name);
-      await AsyncStorage.setItem("phonenumber", phonenumber);
-      await AsyncStorage.setItem("birthmonth", birthMonth);
-      await AsyncStorage.setItem("birthday", birthDay);
-      await AsyncStorage.setItem("birthyear", birthYear);
-      await AsyncStorage.setItem("homeaddress", homeadress);
-      await AsyncStorage.setItem("homecity", homecity);
-      await AsyncStorage.setItem("homestate", homestate);
-      await AsyncStorage.setItem("homezip", homezip);
-      await AsyncStorage.setItem(
-        "emergencycontactname1",
-        emergencycontactname1
-      );
-      await AsyncStorage.setItem(
-        "emergencycontactnumber1",
-        emergencycontactnumber1
-      );
-      await AsyncStorage.setItem(
-        "emergencycontactname2",
-        emergencycontactname2
-      );
-      await AsyncStorage.setItem(
-        "emergencycontactnumber2",
-        emergencycontactnumber2
-      );
-      console.log("Personal information saved successfully!");
-    } catch (error) {
-      console.error("Error saving personal information:", error);
-    }
-    console.log("Navigate to Personal Info View");
-    navigation.navigate("Informacion Personal (Vista)");
-  };
-
-  const loadPersonalInfo = async () => {
-    try {
-      const storedName = await AsyncStorage.getItem("name");
-      const storedPhoneNumber = await AsyncStorage.getItem("phonenumber");
-      const storedBirthMonth = await AsyncStorage.getItem("birthmonth");
-      const storedBirthDay = await AsyncStorage.getItem("birthday");
-      const storedBirthYear = await AsyncStorage.getItem("birthyear");
-      const storedHomeAddress = await AsyncStorage.getItem("homeaddress");
-      const storedHomeCity = await AsyncStorage.getItem("homecity");
-      const storedHomeState = await AsyncStorage.getItem("homestate");
-      const storedHomeZip = await AsyncStorage.getItem("homezip");
-      const storedNameEmergencyContactName1 = await AsyncStorage.getItem(
-        "emergencycontactname1"
-      );
-      const storedNameEmergencyContactNumber1 = await AsyncStorage.getItem(
-        "emergencycontactnumber1"
-      );
-      const storedNameEmergencyContactName2 = await AsyncStorage.getItem(
-        "emergencycontactname2"
-      );
-      const storedNameEmergencyContactNumber2 = await AsyncStorage.getItem(
-        "emergencycontactnumber2"
-      );
-
-      if (
-        storedName !== null &&
-        storedPhoneNumber !== null &&
-        storedBirthMonth !== null &&
-        storedBirthDay !== null &&
-        storedBirthYear !== null &&
-        storedHomeAddress !== null &&
-        storedHomeCity !== null &&
-        storedHomeState !== null &&
-        storedHomeZip !== null &&
-        storedNameEmergencyContactName1 !== null &&
-        storedNameEmergencyContactNumber1 !== null &&
-        storedNameEmergencyContactName2 !== null &&
-        storedNameEmergencyContactNumber2 !== null
-      ) {
-        setName(storedName);
-        setPhoneNumber(storedPhoneNumber);
-        setBirthMonth(storedBirthMonth);
-        setBirthDay(storedBirthDay);
-        setBirthYear(storedBirthYear);
-        setHomeAddress(storedHomeAddress);
-        setHomeCity(storedHomeCity);
-        setHomeState(storedHomeState);
-        setHomeZip(storedHomeZip);
-        setEmergencyContactName1(storedNameEmergencyContactName1);
-        setEmergencyContactNumber1(storedNameEmergencyContactNumber1);
-        setEmergencyContactName2(storedNameEmergencyContactName2);
-        setEmergencyContactNumber2(storedNameEmergencyContactNumber2);
-      }
-    } catch (error) {
-      console.error("Error loading personal information:", error);
-    }
-  };
-
-  // Add content for the new screen here
-  return (
-    <View style={styles.vbox}>
+{
+  /* <View style={styles.vbox}>
       <View style={styles.hbox}>
         <View style={styles.vbox}>
           <Text style={styles.text}>Nombre</Text>
@@ -223,9 +108,22 @@ const PersonalInfoEditScreen = ({ navigation }) => {
             onChangeText={(text) => setEmergencyContactNumber2(text)}
           />
         </View>
-      </View>
-      <TouchableHighlight onPress={savePersonalInfo} style={styles.button}>
-        <Text style={styles.buttonText}>Guardar Informacion Personal</Text>
+      </View> */
+}
+const PersonalInfoViewScreen = ({ navigation }) => {
+  const moveToPersonalInfoEditScreen = () => {
+    console.log("Navigate to Personal Info Edit");
+    navigation.navigate("Informacion Personal (Editar)");
+  };
+
+  // Add content for the new screen here
+  return (
+    <View style={styles.vbox}>
+      <TouchableHighlight
+        onPress={moveToPersonalInfoEditScreen}
+        style={styles.button}
+      >
+        <Text style={styles.buttonText}>Editar Informacion Personal</Text>
       </TouchableHighlight>
     </View>
   );
@@ -347,4 +245,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PersonalInfoEditScreen;
+export default PersonalInfoViewScreen;

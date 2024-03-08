@@ -5,6 +5,7 @@ import "react-native-gesture-handler";
 import StartScreen from "./components/StartScreen";
 import HomeScreen from "./components/HomeScreen";
 import PersonalInfoEditScreen from "./components/PersonalInfoEditScreen.js";
+import PersonalInfoViewScreen from "./components/PersonalInfoViewScreen.js";
 
 const Stack = createStackNavigator();
 
@@ -15,7 +16,11 @@ export default function App() {
         <Stack.Screen name="Start" component={StartScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen
-          name="Informacion Personal"
+          name="Informacion Personal (Vista)"
+          component={PersonalInfoViewScreen}
+        />
+        <Stack.Screen
+          name="Informacion Personal (Editar)"
           component={PersonalInfoEditScreen}
         />
       </Stack.Navigator>

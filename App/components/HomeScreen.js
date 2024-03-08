@@ -32,7 +32,7 @@ const HomeScreen = ({ navigation }) => {
 
   const handlePersonalInfoStartButton = () => {
     console.log("Navigate to Personal Info Home");
-    navigation.navigate("Informacion Personal");
+    navigation.navigate("Informacion Personal (Vista)");
   };
 
   const desiredAudioData = audioData.find((data) => data.id === 1);
