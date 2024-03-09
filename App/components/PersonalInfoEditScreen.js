@@ -22,6 +22,7 @@ const PersonalInfoEditScreen = ({ navigation }) => {
   const [emergencycontactnumber1, setEmergencyContactNumber1] = useState("");
   const [emergencycontactname2, setEmergencyContactName2] = useState("");
   const [emergencycontactnumber2, setEmergencyContactNumber2] = useState("");
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   useEffect(() => {
     loadPersonalInfo();
@@ -107,6 +108,7 @@ const PersonalInfoEditScreen = ({ navigation }) => {
       setEmergencyContactNumber1(storedNameEmergencyContactNumber1 ?? "");
       setEmergencyContactName2(storedNameEmergencyContactName2 ?? "");
       setEmergencyContactNumber2(storedNameEmergencyContactNumber2 ?? "");
+      setDataLoaded(true);
     } catch (error) {
       console.error("Error loading personal information:", error);
     }
@@ -119,7 +121,7 @@ const PersonalInfoEditScreen = ({ navigation }) => {
           <Text style={styles.nametext}>Nombre</Text>
           <TextInput
             style={styles.nameinput}
-            placeholder="Nombre"
+            placeholder={dataLoaded ? "Nombre" : "Cargando..."}
             value={name}
             onChangeText={(text) => setName(text)}
           />
@@ -128,7 +130,7 @@ const PersonalInfoEditScreen = ({ navigation }) => {
           <Text style={styles.numbertext}>Numero</Text>
           <TextInput
             style={styles.numberinput}
-            placeholder="Numero"
+            placeholder={dataLoaded ? "Numero" : "Cargando..."}
             value={phonenumber}
             onChangeText={(text) => setPhoneNumber(text)}
           />
@@ -138,19 +140,19 @@ const PersonalInfoEditScreen = ({ navigation }) => {
       <View style={styles.hbox}>
         <TextInput
           style={styles.monthinput}
-          placeholder="Mes"
+          placeholder={dataLoaded ? "Mes" : "Cargando..."}
           value={birthMonth}
           onChangeText={(text) => setBirthMonth(text)}
         />
         <TextInput
           style={styles.dayinput}
-          placeholder="Dia"
+          placeholder={dataLoaded ? "Dia" : "Cargando..."}
           value={birthDay}
           onChangeText={(text) => setBirthDay(text)}
         />
         <TextInput
           style={styles.yearinput}
-          placeholder="Año"
+          placeholder={dataLoaded ? "Año" : "Cargando..."}
           value={birthYear}
           onChangeText={(text) => setBirthYear(text)}
         />
@@ -158,26 +160,26 @@ const PersonalInfoEditScreen = ({ navigation }) => {
       <Text style={styles.addresstext}>Direccion y Ciudad</Text>
       <TextInput
         style={styles.addressinput}
-        placeholder="Direccion"
+        placeholder={dataLoaded ? "Direccion" : "Cargando..."}
         value={homeadress}
         onChangeText={(text) => setHomeAddress(text)}
       />
       <View style={styles.hbox}>
         <TextInput
           style={styles.cityinput}
-          placeholder="Ciudad"
+          placeholder={dataLoaded ? "Ciudad" : "Cargando..."}
           value={homecity}
           onChangeText={(text) => setHomeCity(text)}
         />
         <TextInput
           style={styles.statezipinput}
-          placeholder="Estado"
+          placeholder={dataLoaded ? "Estado" : "Cargando..."}
           value={homestate}
           onChangeText={(text) => setHomeState(text)}
         />
         <TextInput
           style={styles.statezipinput}
-          placeholder="Codigo Postal"
+          placeholder={dataLoaded ? "Codigo" : "Cargando..."}
           value={homezip}
           onChangeText={(text) => setHomeZip(text)}
         />
@@ -187,13 +189,13 @@ const PersonalInfoEditScreen = ({ navigation }) => {
           <Text style={styles.emergencytext}>Contacto 1</Text>
           <TextInput
             style={styles.emergencyinput}
-            placeholder="Nombre"
+            placeholder={dataLoaded ? "Nombre" : "Cargando..."}
             value={emergencycontactname1}
             onChangeText={(text) => setEmergencyContactName1(text)}
           />
           <TextInput
             style={styles.emergencyinput}
-            placeholder="Numero"
+            placeholder={dataLoaded ? "Numero" : "Cargando..."}
             value={emergencycontactnumber1}
             onChangeText={(text) => setEmergencyContactNumber1(text)}
           />
@@ -202,13 +204,13 @@ const PersonalInfoEditScreen = ({ navigation }) => {
           <Text style={styles.emergencytext}>Contacto 2</Text>
           <TextInput
             style={styles.emergencyinput}
-            placeholder="Nombre"
+            placeholder={dataLoaded ? "Nombre" : "Cargando..."}
             value={emergencycontactname2}
             onChangeText={(text) => setEmergencyContactName2(text)}
           />
           <TextInput
             style={styles.emergencyinput}
-            placeholder="Numero"
+            placeholder={dataLoaded ? "Numero" : "Cargando..."}
             value={emergencycontactnumber2}
             onChangeText={(text) => setEmergencyContactNumber2(text)}
           />
