@@ -31,7 +31,7 @@ const HomeScreen = ({ navigation }) => {
   };
 
   const handlePersonalInfoStartButton = () => {
-    console.log("Navigate to Personal Info Home");
+    console.log("Navigate to Personal Info View");
     navigation.navigate("Informacion Personal (Vista)");
   };
 

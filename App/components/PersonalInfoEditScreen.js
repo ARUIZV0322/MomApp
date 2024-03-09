@@ -24,7 +24,6 @@ const PersonalInfoEditScreen = ({ navigation }) => {
   const [emergencycontactnumber2, setEmergencyContactNumber2] = useState("");
 
   useEffect(() => {
-    // Load stored data when the component mounts
     loadPersonalInfo();
   }, []);
 
@@ -56,11 +55,8 @@ const PersonalInfoEditScreen = ({ navigation }) => {
         emergencycontactnumber2
       );
       console.log("Personal information saved successfully!");
-      const loadedData = await dataToPass();
       console.log("Navigate to Personal Info View");
-      navigation.navigate("Informacion Personal (Vista)", {
-        loadedData: loadedData,
-      });
+      navigation.navigate("Informacion Personal (Vista)");
     } catch (error) {
       console.error("Error saving personal information:", error);
     }
@@ -68,79 +64,70 @@ const PersonalInfoEditScreen = ({ navigation }) => {
 
   const loadPersonalInfo = async () => {
     try {
-      const storedName = await AsyncStorage.getItem("name");
-      const storedPhoneNumber = await AsyncStorage.getItem("phonenumber");
-      const storedBirthMonth = await AsyncStorage.getItem("birthmonth");
-      const storedBirthDay = await AsyncStorage.getItem("birthday");
-      const storedBirthYear = await AsyncStorage.getItem("birthyear");
-      const storedHomeAddress = await AsyncStorage.getItem("homeaddress");
-      const storedHomeCity = await AsyncStorage.getItem("homecity");
-      const storedHomeState = await AsyncStorage.getItem("homestate");
-      const storedHomeZip = await AsyncStorage.getItem("homezip");
-      const storedNameEmergencyContactName1 = await AsyncStorage.getItem(
-        "emergencycontactname1"
-      );
-      const storedNameEmergencyContactNumber1 = await AsyncStorage.getItem(
-        "emergencycontactnumber1"
-      );
-      const storedNameEmergencyContactName2 = await AsyncStorage.getItem(
-        "emergencycontactname2"
-      );
-      const storedNameEmergencyContactNumber2 = await AsyncStorage.getItem(
-        "emergencycontactnumber2"
-      );
+      const [
+        storedName,
+        storedPhoneNumber,
+        storedBirthMonth,
+        storedBirthDay,
+        storedBirthYear,
+        storedHomeAddress,
+        storedHomeCity,
+        storedHomeState,
+        storedHomeZip,
+        storedNameEmergencyContactName1,
+        storedNameEmergencyContactNumber1,
+        storedNameEmergencyContactName2,
+        storedNameEmergencyContactNumber2,
+      ] = await Promise.all([
+        AsyncStorage.getItem("name"),
+        AsyncStorage.getItem("phonenumber"),
+        AsyncStorage.getItem("birthmonth"),
+        AsyncStorage.getItem("birthday"),
+        AsyncStorage.getItem("birthyear"),
+        AsyncStorage.getItem("homeaddress"),
+        AsyncStorage.getItem("homecity"),
+        AsyncStorage.getItem("homestate"),
+        AsyncStorage.getItem("homezip"),
+        AsyncStorage.getItem("emergencycontactname1"),
+        AsyncStorage.getItem("emergencycontactnumber1"),
+        AsyncStorage.getItem("emergencycontactname2"),
+        AsyncStorage.getItem("emergencycontactnumber2"),
+      ]);
 
-      if (
-        storedName !== null &&
-        storedPhoneNumber !== null &&
-        storedBirthMonth !== null &&
-        storedBirthDay !== null &&
-        storedBirthYear !== null &&
-        storedHomeAddress !== null &&
-        storedHomeCity !== null &&
-        storedHomeState !== null &&
-        storedHomeZip !== null &&
-        storedNameEmergencyContactName1 !== null &&
-        storedNameEmergencyContactNumber1 !== null &&
-        storedNameEmergencyContactName2 !== null &&
-        storedNameEmergencyContactNumber2 !== null
-      ) {
-        setName(storedName);
-        setPhoneNumber(storedPhoneNumber);
-        setBirthMonth(storedBirthMonth);
-        setBirthDay(storedBirthDay);
-        setBirthYear(storedBirthYear);
-        setHomeAddress(storedHomeAddress);
-        setHomeCity(storedHomeCity);
-        setHomeState(storedHomeState);
-        setHomeZip(storedHomeZip);
-        setEmergencyContactName1(storedNameEmergencyContactName1);
-        setEmergencyContactNumber1(storedNameEmergencyContactNumber1);
-        setEmergencyContactName2(storedNameEmergencyContactName2);
-        setEmergencyContactNumber2(storedNameEmergencyContactNumber2);
-      }
+      setName(storedName ?? "");
+      setPhoneNumber(storedPhoneNumber ?? "");
+      setBirthMonth(storedBirthMonth ?? "");
+      setBirthDay(storedBirthDay ?? "");
+      setBirthYear(storedBirthYear ?? "");
+      setHomeAddress(storedHomeAddress ?? "");
+      setHomeCity(storedHomeCity ?? "");
+      setHomeState(storedHomeState ?? "");
+      setHomeZip(storedHomeZip ?? "");
+      setEmergencyContactName1(storedNameEmergencyContactName1 ?? "");
+      setEmergencyContactNumber1(storedNameEmergencyContactNumber1 ?? "");
+      setEmergencyContactName2(storedNameEmergencyContactName2 ?? "");
+      setEmergencyContactNumber2(storedNameEmergencyContactNumber2 ?? "");
     } catch (error) {
       console.error("Error loading personal information:", error);
     }
   };
 
-  // Add content for the new screen here
   return (
     <View style={styles.vbox}>
       <View style={styles.hbox}>
         <View style={styles.vbox}>
-          <Text style={styles.text}>Nombre</Text>
+          <Text style={styles.nametext}>Nombre</Text>
           <TextInput
-            style={styles.smallinput}
+            style={styles.nameinput}
             placeholder="Nombre"
             value={name}
             onChangeText={(text) => setName(text)}
           />
         </View>
         <View style={styles.vbox}>
-          <Text style={styles.text}>Numero</Text>
+          <Text style={styles.numbertext}>Numero</Text>
           <TextInput
-            style={styles.smallinput}
+            style={styles.numberinput}
             placeholder="Numero"
             value={phonenumber}
             onChangeText={(text) => setPhoneNumber(text)}
@@ -248,6 +235,32 @@ const styles = StyleSheet.create({
     alignItems: "center", // You can adjust this based on your layout needs
     margin: 5,
   },
+  nametext: {
+    marginRight: 125,
+    fontSize: 30, // Set the desired font size
+  },
+  numbertext: {
+    marginRight: 20,
+    fontSize: 30, // Set the desired font size
+  },
+  nameinput: {
+    width: 250, // Set the desired width
+    height: 50, // Set the desired height
+    fontSize: 20, // Set the desired font size
+    borderWidth: 1,
+    borderColor: "gray",
+    padding: 10,
+    margin: 2,
+  },
+  numberinput: {
+    width: 150, // Set the desired width
+    height: 50, // Set the desired height
+    fontSize: 20, // Set the desired font size
+    borderWidth: 1,
+    borderColor: "gray",
+    padding: 10,
+    margin: 2,
+  },
   smallinput: {
     width: 200, // Set the desired width
     height: 50, // Set the desired height
@@ -285,9 +298,9 @@ const styles = StyleSheet.create({
     margin: 2,
   },
   emergencyinput: {
-    width: 200, // Set the desired width
-    height: 50, // Set the desired height
-    fontSize: 20, // Set the desired font size
+    width: 200,
+    height: 50,
+    fontSize: 20,
     borderWidth: 1,
     borderColor: "gray",
     padding: 5,
@@ -296,7 +309,7 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 25,
     marginBottom: 25,
-    backgroundColor: "dodgerblue",
+    backgroundColor: "forestgreen",
     borderRadius: 5,
     padding: 20,
   },
@@ -307,98 +320,47 @@ const styles = StyleSheet.create({
   },
   text: {
     marginRight: 80,
-    fontSize: 30, // Set the desired font size
+    fontSize: 30,
   },
   emergencytext: {
     marginRight: 40,
-    fontSize: 30, // Set the desired font size
+    fontSize: 30,
   },
   addresstext: {
     marginRight: 135,
-    fontSize: 30, // Set the desired font size
+    fontSize: 30,
   },
   birthdaytext: {
     marginRight: 97,
-    fontSize: 30, // Set the desired font size
+    fontSize: 30,
   },
   monthinput: {
-    width: 175, // Set the desired width
-    height: 50, // Set the desired height
-    fontSize: 20, // Set the desired font size
+    width: 175,
+    height: 50,
+    fontSize: 20,
     borderWidth: 1,
     borderColor: "gray",
     padding: 5,
     margin: 2,
   },
   dayinput: {
-    width: 110, // Set the desired width
-    height: 50, // Set the desired height
-    fontSize: 20, // Set the desired font size
+    width: 110,
+    height: 50,
+    fontSize: 20,
     borderWidth: 1,
     borderColor: "gray",
     padding: 5,
     margin: 2,
   },
   yearinput: {
-    width: 110, // Set the desired width
-    height: 50, // Set the desired height
-    fontSize: 20, // Set the desired font size
+    width: 110,
+    height: 50,
+    fontSize: 20,
     borderWidth: 1,
     borderColor: "gray",
     padding: 5,
     margin: 2,
   },
 });
-
-// Create a constant PersonalInfo with string properties
-const dataToPass = async () => {
-  try {
-    const storedName = await AsyncStorage.getItem("name");
-    const storedPhoneNumber = await AsyncStorage.getItem("phonenumber");
-    const storedBirthMonth = await AsyncStorage.getItem("birthmonth");
-    const storedBirthDay = await AsyncStorage.getItem("birthday");
-    const storedBirthYear = await AsyncStorage.getItem("birthyear");
-    const storedHomeAddress = await AsyncStorage.getItem("homeaddress");
-    const storedHomeCity = await AsyncStorage.getItem("homecity");
-    const storedHomeState = await AsyncStorage.getItem("homestate");
-    const storedHomeZip = await AsyncStorage.getItem("homezip");
-    const storedNameEmergencyContactName1 = await AsyncStorage.getItem(
-      "emergencycontactname1"
-    );
-    const storedNameEmergencyContactNumber1 = await AsyncStorage.getItem(
-      "emergencycontactnumber1"
-    );
-    const storedNameEmergencyContactName2 = await AsyncStorage.getItem(
-      "emergencycontactname2"
-    );
-    const storedNameEmergencyContactNumber2 = await AsyncStorage.getItem(
-      "emergencycontactnumber2"
-    );
-    // Do something with the retrieved data, or return it
-    const data = {
-      storedName: storedName || "",
-      storedPhoneNumber: storedPhoneNumber || "",
-      storedBirthMonth: storedBirthMonth || "",
-      storedBirthDay: storedBirthDay || "",
-      storedBirthYear: storedBirthYear || "",
-      storedHomeAddress: storedHomeAddress || "",
-      storedHomeCity: storedHomeCity || "",
-      storedHomeState: storedHomeState || "",
-      storedHomeZip: storedHomeZip || "",
-      storedNameEmergencyContactName1: storedNameEmergencyContactName1 || "",
-      storedNameEmergencyContactName2: storedNameEmergencyContactName2 || "",
-      storedNameEmergencyContactNumber1:
-        storedNameEmergencyContactNumber1 || "",
-      storedNameEmergencyContactNumber2:
-        storedNameEmergencyContactNumber2 || "",
-    };
-
-    console.log("Loaded personal information for transport:", data);
-
-    return data;
-  } catch (error) {
-    console.error("Error loading personal information for transport:", error);
-  }
-};
 
 export default PersonalInfoEditScreen;
