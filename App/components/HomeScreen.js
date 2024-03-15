@@ -49,7 +49,7 @@ const HomeScreen = ({ navigation }) => {
             style={homeStyles.button}
             onPress={handlePhysicalTherapyStartButton}
           >
-            <Text style={homeStyles.buttonText}>Tocar Aqui</Text>
+            <Text style={homeStyles.buttonText}>Toca Aqui</Text>
           </TouchableHighlight>
         </View>
       </View>
@@ -63,7 +63,7 @@ const HomeScreen = ({ navigation }) => {
             style={homeStyles.button}
             onPress={handleSpeechTherapyStartButton}
           >
-            <Text style={homeStyles.buttonText}>Tocar Aqui</Text>
+            <Text style={homeStyles.buttonText}>Toca Aqui</Text>
           </TouchableHighlight>
         </View>
       </View>
@@ -77,7 +77,7 @@ const HomeScreen = ({ navigation }) => {
             style={homeStyles.button}
             onPress={handleReminderTherapyStartButton}
           >
-            <Text style={homeStyles.buttonText}>Tocar Aqui</Text>
+            <Text style={homeStyles.buttonText}>Toca Aqui</Text>
           </TouchableHighlight>
         </View>
       </View>
@@ -98,7 +98,7 @@ const HomeScreen = ({ navigation }) => {
             style={homeStyles.button}
             onPress={handlePersonalInfoStartButton}
           >
-            <Text style={homeStyles.buttonText}>Tocar Aqui</Text>
+            <Text style={homeStyles.buttonText}>Toca Aqui</Text>
           </TouchableHighlight>
         </View>
       </View>

@@ -26,7 +26,7 @@ const StartScreen = ({ navigation }) => {
         style={styles.button}
         onPress={handleStartButtonPress}
       >
-        <Text style={styles.buttonText}>Tocar Aqui</Text>
+        <Text style={styles.buttonText}>Toca aqui</Text>
       </TouchableHighlight>
     </SafeAreaView>
   );
